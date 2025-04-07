@@ -17,7 +17,7 @@
   <div class="status" id="status">Carregando status...</div>
 
   <script>
-    const pico_ip = "http://192.168.1.100"; // substitua com IP real do Pico
+    const pico_ip = "http://192.168.137.235"; // substitua com IP real do Pico
 
     function sendCommand(path) {
       fetch(pico_ip + path).then(loadStatus);
