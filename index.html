@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pico Web UI</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 30px; background: #f0f0f0; }
+    button { padding: 10px 20px; margin: 10px; font-size: 16px; }
+    .status { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Controle Remoto Pico W</h1>
+  <button onclick="sendCommand('/led/on')">Ligar LED</button>
+  <button onclick="sendCommand('/led/off')">Desligar LED</button>
+  <div class="status" id="status">Carregando status...</div>
+
+  <script>
+    const pico_ip = "http://192.168.1.100"; // substitua com IP real do Pico
+
+    function sendCommand(path) {
+      fetch(pico_ip + path).then(loadStatus);
+    }
+
+    function loadStatus() {
+      fetch(pico_ip + "/status")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("status").innerText = 
+            `Botão 1: ${data.botao1} | Botão 2: ${data.botao2} | LED: ${data.led ? 'Ligado' : 'Desligado'}`;
+        })
+        .catch(err => {
+          document.getElementById("status").innerText = "Erro ao obter status!";
+        });
+    }
+
+    setInterval(loadStatus, 2000);
+    loadStatus();
+  </script>
+</body>
+</html>
