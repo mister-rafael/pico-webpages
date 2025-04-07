@@ -25,7 +25,7 @@
 
     function loadStatus() {
       fetch(pico_ip + "/status")
-        .then(res => res.json())
+        .then(request => request.json())
         .then(data => {
           document.getElementById("status").innerText = 
             `Botão 1: ${data.botao1} | Botão 2: ${data.botao2} | LED: ${data.led ? 'Ligado' : 'Desligado'}`;
